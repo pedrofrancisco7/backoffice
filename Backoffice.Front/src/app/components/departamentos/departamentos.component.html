@@ -1,0 +1,50 @@
+<div id="formularioDpto" *ngIf="exibirFormularioDpto">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="form">
+                    <h2>Cadastro de Departamento</h2>
+                    <form [formGroup]="formularioDpto" (ngSubmit)="onSubmit()" class="form-group">
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label for="nome" class="form-label">Nome Departamento</label>
+                                <input id="nome" type="text" formControlName="nome" class="form-control">
+                                <div *ngIf="formularioDpto.get('nome').invalid && (formularioDpto.get('nome').dirty || formularioDpto.get('nome').touched)"
+                                    class="text-danger">
+                                    <div *ngIf="formularioDpto.get('nome').hasError('required')">
+                                        <small>O campo Nome é obrigatório.</small>
+                                    </div>
+                                    <div *ngIf="formularioDpto.get('nome').hasError('minlength')">
+                                        <small>O campo Nome deve ter ao menos 3 caracteres.</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="responsavel" class="form-label">Responsável</label>
+                                <select #pessoas (change)="onSelect(pessoas.value)" id="responsavel"
+                                    formControlName="responsavel" class="form-select">
+                                    <option *ngFor="let respon of responsaveis" [value]="respon.id">{{
+                                        respon.nome }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="row" style="text-align: center;">
+                            <div class="col-md-12">
+                                <button style="width: 200px;" type="submit" class="btn btn-primary" [disabled]="!formularioDpto.valid">Enviar</button>
+                                <!-- <button style="width: 200px;" type="submit" class="btn btn-primary">Enviar</button> -->
+                            </div>
+                            <div class="col-md-12" *ngIf="sucesso">
+                                <p class="text-success" style="margin-top: 3%; margin-bottom: 0;">Departamento cadastrado com
+                                    Sucesso!</p>
+                            </div>
+                            <div class="col-md-12" *ngIf="erro">
+                                <p class="text-danger" style="margin-top: 3%; margin-bottom: 0;">O Departamento já existe! Tente novamente!</p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

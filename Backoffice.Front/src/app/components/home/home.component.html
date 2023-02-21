@@ -1,0 +1,159 @@
+<!-- <div class="welcome-message" id="mensagem" [@mensagemAnimacao]="exibirMensagem ? 'visivel' : 'escondido'"
+    (@mensagemAnimacao.done)="exibirForm()">
+    <h1>Bem-vindo!</h1>
+    <p>Sistema de Cadastro de Usuários.</p>
+</div> -->
+
+<div id="formulario" *ngIf="exibirFormulario">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="form">
+                    <h2>Cadastro de Pessoas</h2>
+                    <form [formGroup]="formulario" (ngSubmit)="onSubmit()" class="form-group">
+                        <div class="row">
+                            <div class="col-md-3 form-group">
+                                <label for="tipoPessoa" class="form-label">Tipo Pessoa (*)</label>
+                                <select #tipoPessoa autofocus (change)="onSelect(tipoPessoa.value)" id="tipoPessoa"
+                                    formControlName="tipoPessoa" class="form-select">
+                                    <option *ngFor="let tipo of tiposPessoa" [value]="tipo">{{ tipo }}</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-5 form-group">
+                                <div *ngIf="!mudarTipoPessoa; else cnpj">
+                                    <label for="documento" class="form-label">Documento (CPF) (*)</label>
+                                    <input id="documento" type="text" formControlName="documento" mask="000.000.000-00"
+                                        class="form-control" placeholder="Digite o seu CPF">
+                                </div>
+                                <ng-template #cnpj>
+                                    <label for="documento" class="form-label">Documento (CNPJ) (*)</label>
+                                    <input id="documento" type="text" formControlName="documento"
+                                        mask="00.000.000/0000-00" class="form-control" placeholder="Digite o seu CNPJ">
+                                </ng-template>
+                                <div class="text-danger"
+                                    *ngIf="formulario.get('documento').invalid && (formulario.get('documento').dirty || formulario.get('documento').touched)">
+                                    <div *ngIf="formulario.get('documento').hasError('required')">
+                                        <small>O campo Documento é obrigatório.</small>
+                                    </div>
+                                    <div *ngIf="formulario.get('documento').hasError('minlength')">
+                                        <small>O campo Documento deve ter pelo menos 11 caracteres.</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for="qualificacao" class="form-label">Qualificacao (*)</label>
+                                <select #qualificacao id="qualificacao" (change)="setQualificacao(qualificacao.value)"
+                                    formControlName="qualificacao" class="form-select">
+                                    <option *ngFor="let tipo of tipoQualificacao" [value]="tipo.id">{{ tipo.nome }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <div *ngIf="!mudarTipoPessoa; else razao">
+                                    <label for="nome" class="form-label">Nome (*)</label>
+                                    <input id="nome" type="text" formControlName="nome" class="form-control"
+                                        placeholder="Digite o seu nome">
+                                </div>
+                                <ng-template #razao>
+                                    <label for="nome" class="form-label">Razão Social (*)</label>
+                                    <input id="nome" type="text" formControlName="nome" class="form-control"
+                                        placeholder="Digite a sua Razão Social">
+                                </ng-template>
+                                <div *ngIf="formulario.get('nome').invalid && (formulario.get('nome').dirty || formulario.get('nome').touched)"
+                                    class="text-danger">
+                                    <div *ngIf="formulario.get('nome').hasError('required')">
+                                        <small>O campo Nome é obrigatório.</small>
+                                    </div>
+                                    <div *ngIf="formulario.get('nome').hasError('minlength')">
+                                        <small>O campo Nome deve ter ao menos 3 caracteres.</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 form-group">
+                                <div *ngIf="!mudarTipoPessoa; else fantasia">
+                                    <label for="apelido" class="form-label">Apelido</label>
+                                    <input id="apelido" type="text" formControlName="apelido" class="form-control"
+                                        placeholder="Digite o seu Apelido">
+                                </div>
+                                <ng-template #fantasia>
+                                    <label for="apelido" class="form-label">Nome Fantasia</label>
+                                    <input id="apelido" type="text" formControlName="apelido" class="form-control"
+                                        placeholder="Digite o seu Nome Fantasia">
+                                </ng-template>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2 form-group">
+                                <label for="cep" class="form-label">CEP (*)</label>
+                                <input #numCep id="cep" type="text" formControlName="cep" class="form-control"
+                                    (keyup)="buscaCep(numCep.value)">
+
+                                <div class="text-danger"
+                                    *ngIf="formulario.get('cep').invalid && (formulario.get('cep').dirty || formulario.get('cep').touched)">
+                                    <div *ngIf="formulario.get('cep').hasError('required')">
+                                        <small>CEP obrigatório.</small>
+                                    </div>
+                                    <div *ngIf="formulario.get('cep').hasError('minlength')">
+                                        <small>Min. 8 digitos.</small>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="logradouro" class="form-label">Logradouro</label>
+                                <input id="logradouro" type="text" formControlName="logradouro" class="form-control">
+                            </div>
+                            <div class="col-md-2 form-group">
+                                <label for="num" class="form-label">No.</label>
+                                <input id="num" type="text" formControlName="num" class="form-control">
+                                <div class="text-danger"
+                                    *ngIf="formulario.get('cep').invalid && (formulario.get('cep').dirty || formulario.get('cep').touched)">
+                                    <div *ngIf="formulario.get('num').hasError('required')">
+                                        <small>Obrigatório.</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 form-group">
+                                <label for="complemento" class="form-label">Comp.</label>
+                                <input id="complemento" type="text" formControlName="complemento" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-5 form-group">
+                                <label for="bairro" class="form-label">Bairro</label>
+                                <input id="bairro" type="text" formControlName="bairro" class="form-control">
+                            </div>
+                            <div class="col-md-5 form-group">
+                                <label for="localidade" class="form-label">Localidade</label>
+                                <input id="localidade" type="text" formControlName="localidade" class="form-control">
+                            </div>
+                            <div class="col-md-2 form-group">
+                                <label for="uf" class="form-label">UF</label>
+                                <input id="uf" type="text" formControlName="uf" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row" style="text-align: center;">
+                            <div class="col-md-12">
+                                <button style="width: 200px;" type="submit" class="btn btn-primary" [disabled]="!formulario.valid">Enviar</button>
+                                <!-- <button style="width: 200px;" type="submit" class="btn btn-primary">Enviar</button> -->
+                            </div>
+                            <div class="col-md-12" *ngIf="sucesso">
+                                <p class="text-success" style="margin-top: 3%; margin-bottom: 0;">Usuário cadastrado com
+                                    Sucesso!</p>
+                            </div>
+                            <div class="col-md-12" *ngIf="erro">
+                                <p class="text-danger" style="margin-top: 3%; margin-bottom: 0;">O Documento já existe na base! Tente novamente!</p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
