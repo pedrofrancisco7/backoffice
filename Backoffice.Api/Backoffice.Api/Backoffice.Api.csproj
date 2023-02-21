@@ -18,13 +18,13 @@
     <None Remove="AutoMapper" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Backoffice.Domain\Backoffice.Domain.csproj">
+    <ProjectReference Include="..\Backoffice.Domain\Backoffice.Domain.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
-    <ProjectReference Include="..\..\Backoffice.Services\Backoffice.Services.csproj">
+    <ProjectReference Include="..\Backoffice.Services\Backoffice.Services.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
-    <ProjectReference Include="..\..\Backoffice.IoC\Backoffice.IoC.csproj">
+    <ProjectReference Include="..\Backoffice.IoC\Backoffice.IoC.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>

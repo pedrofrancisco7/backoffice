@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.2 - IoC", "4.2 - IoC", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backoffice.Services", "Backoffice.Services\Backoffice.Services.csproj", "{03275189-B44A-4B26-95AB-9FE0F1B35B8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backoffice.Api", "Backoffice.Api\Backoffice.Api\Backoffice.Api.csproj", "{04712E53-5BC5-4A98-9484-E9B691E12E21}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backoffice.Api", "Backoffice.Api\Backoffice.Api.csproj", "{04712E53-5BC5-4A98-9484-E9B691E12E21}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backoffice.Domain", "Backoffice.Domain\Backoffice.Domain.csproj", "{8617AEF0-50B1-45E6-B494-BAFDD6DDFF56}"
 EndProject
